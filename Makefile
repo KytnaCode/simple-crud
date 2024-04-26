@@ -6,3 +6,7 @@ dev:
 
 build:
 	go build -o ./out/ ./cmd/...
+
+init:
+	go mod download
+	cp .example.env .env
