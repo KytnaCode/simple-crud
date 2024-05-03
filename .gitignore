@@ -29,4 +29,6 @@ go.work
 tmp/
 out/
 
+*.sqlite3
+
 .env

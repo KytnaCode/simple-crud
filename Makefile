@@ -10,3 +10,6 @@ build:
 init:
 	go mod download
 	cp .example.env .env
+
+populate:
+	go run ./cmd/cli database-init
