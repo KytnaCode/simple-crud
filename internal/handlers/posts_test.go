@@ -52,3 +52,25 @@ func TestGetPostById_returnOkResponse(t *testing.T) {
 	}
 }
 
+func TestCreatePost_returnCreatedResponse(t *testing.T) {
+	t.Parallel()
+
+	// Arrange
+	expected := http.StatusCreated
+
+	r, err := http.NewRequest("POST", "/posts", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+
+	// Act
+	handlers.CreatePost(rr, r)
+
+	// Assert
+	if rr.Code != expected {
+		t.Errorf("non 200 response code: expected %v actual %v", expected, rr.Code)
+	}
+}
+
