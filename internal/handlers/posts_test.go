@@ -96,3 +96,25 @@ func TestUpdatePost_returnOkResponse(t *testing.T) {
 	}
 }
 
+func TestPatchPost_returnOkResponse(t *testing.T) {
+	t.Parallel()
+
+	// Arrange
+	expected := http.StatusOK
+
+	r, err := http.NewRequest("PATCH", "/posts/1", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+
+	// Act
+	handlers.PatchPost(rr, r)
+
+	// Assert
+	if rr.Code != expected {
+		t.Errorf("non 200 response code: expected %v actual %v", expected, rr.Code)
+	}
+}
+
