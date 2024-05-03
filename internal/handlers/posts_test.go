@@ -140,3 +140,46 @@ func TestDeletePost_returnOkResponse(t *testing.T) {
 	}
 }
 
+func TestDefault_returnMethodNotAllowedResponse(t *testing.T) {
+	t.Parallel()
+
+	// Arrange
+	expected := http.StatusMethodNotAllowed
+
+	r, err := http.NewRequest("PUT", "/posts", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+
+	// Act
+	handlers.Default(rr, r)
+
+	// Assert
+	if rr.Code != expected {
+		t.Errorf("unexpected response code: expected %v actual %v", expected, rr.Code)
+	}
+}
+
+func TestDefaultWithId_returnMethodNotAllowedResponse(t *testing.T) {
+	t.Parallel()
+
+	// Arrange
+	expected := http.StatusMethodNotAllowed
+
+	r, err := http.NewRequest("POST", "/posts/1", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+
+	// Act
+	handlers.DefaultWithId(rr, r)
+
+	// Assert
+	if rr.Code != expected {
+		t.Errorf("unexpected response code: expected %v actual %v", expected, rr.Code)
+	}
+}

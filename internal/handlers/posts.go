@@ -30,6 +30,16 @@ func DeletePost(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "deleting post...")
 }
 
+func Default(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Allow", "GET,POST")
+	http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+}
+
+func DefaultWithId(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Allow", "GET,PUT,PATCH,DELETE")
+	http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+}
+
 func RegisterPostRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /posts", GetPosts)
 	mux.HandleFunc("GET /posts/{id}", GetPostById)
@@ -37,4 +47,6 @@ func RegisterPostRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("PUT /posts/{id}", UpdatePost)
 	mux.HandleFunc("PATCH /posts/{id}", PatchPost)
 	mux.HandleFunc("DELETE /posts/{id}", DeletePost)
+	mux.HandleFunc("/posts", Default)
+	mux.HandleFunc("/posts/{id}", DefaultWithId)
 }
