@@ -118,3 +118,25 @@ func TestPatchPost_returnOkResponse(t *testing.T) {
 	}
 }
 
+func TestDeletePost_returnOkResponse(t *testing.T) {
+	t.Parallel()
+
+	// Arrange
+	expected := http.StatusOK
+
+	r, err := http.NewRequest("DELETE", "/posts/1", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+
+	// Act
+	handlers.DeletePost(rr, r)
+
+	// Assert
+	if rr.Code != expected {
+		t.Errorf("non 200 response code: expected %v actual %v", expected, rr.Code)
+	}
+}
+
